@@ -16,10 +16,9 @@
 package org.doodle.pipeline.autoconfigure.vaadin;
 
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.tabs.Tab;
-import com.vaadin.flow.router.RouterLink;
+import com.vaadin.flow.component.sidenav.SideNavItem;
 import org.doodle.boot.vaadin.EnableVaadin;
-import org.doodle.boot.vaadin.views.TabSupplier;
+import org.doodle.boot.vaadin.views.SideNavItemSupplier;
 import org.doodle.pipeline.vaadin.PipelineVaadinProperties;
 import org.doodle.pipeline.vaadin.views.PipelineVaadinView;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -34,8 +33,13 @@ import org.springframework.context.annotation.Bean;
 public class PipelineVaadinAutoConfiguration {
 
   @Bean
-  public TabSupplier pipelineTabView() {
-    return (authenticationContext) ->
-        new Tab(VaadinIcon.BOMB.create(), new RouterLink("CI/CD", PipelineVaadinView.class));
+  public SideNavItemSupplier pipelineSideNavView() {
+    return (authenticationContext) -> {
+      SideNavItem item = new SideNavItem("CI Pipeline");
+      item.setPrefixComponent(VaadinIcon.BOMB.create());
+      item.addItem(new SideNavItem("CI Agent", PipelineVaadinView.class, VaadinIcon.BOMB.create()));
+      item.addItem(new SideNavItem("CI 任务", PipelineVaadinView.class, VaadinIcon.TASKS.create()));
+      return item;
+    };
   }
 }
