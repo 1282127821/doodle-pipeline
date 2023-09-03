@@ -18,7 +18,7 @@ package org.doodle.pipeline.autoconfigure.vaadin;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.sidenav.SideNavItem;
 import org.doodle.boot.vaadin.EnableVaadin;
-import org.doodle.boot.vaadin.views.SideNavItemSupplier;
+import org.doodle.boot.vaadin.views.VaadinSideNavItemSupplier;
 import org.doodle.pipeline.vaadin.PipelineVaadinProperties;
 import org.doodle.pipeline.vaadin.views.PipelineVaadinView;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -33,7 +33,7 @@ import org.springframework.context.annotation.Bean;
 public class PipelineVaadinAutoConfiguration {
 
   @Bean
-  public SideNavItemSupplier pipelineSideNavView() {
+  public VaadinSideNavItemSupplier pipelineSideNavView() {
     return (authenticationContext) -> {
       SideNavItem item = new SideNavItem("CI Pipeline");
       item.setPrefixComponent(VaadinIcon.BOMB.create());

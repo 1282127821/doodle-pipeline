@@ -19,9 +19,9 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.RolesAllowed;
-import org.doodle.boot.vaadin.views.MainLayout;
+import org.doodle.boot.vaadin.views.VaadinMainLayout;
 
 @RolesAllowed("PIPELINE_ADMIN")
 @PageTitle("Pipeline")
-@Route(value = "pipeline", layout = MainLayout.class)
+@Route(value = "pipeline", layout = VaadinMainLayout.class)
 public class PipelineVaadinView extends VerticalLayout {}
