@@ -19,10 +19,14 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.sidenav.SideNavItem;
 import org.doodle.boot.vaadin.EnableVaadin;
 import org.doodle.boot.vaadin.views.VaadinSideNavItemSupplier;
+import org.doodle.pipeline.vaadin.PipelineVaadinAgentService;
 import org.doodle.pipeline.vaadin.PipelineVaadinProperties;
-import org.doodle.pipeline.vaadin.views.PipelineVaadinView;
+import org.doodle.pipeline.vaadin.PipelineVaadinTaskService;
+import org.doodle.pipeline.vaadin.views.PipelineVaadinAgentsView;
+import org.doodle.pipeline.vaadin.views.PipelineVaadinTasksView;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
@@ -33,12 +37,27 @@ import org.springframework.context.annotation.Bean;
 public class PipelineVaadinAutoConfiguration {
 
   @Bean
+  @ConditionalOnMissingBean
+  public PipelineVaadinAgentService pipelineVaadinAgentService() {
+    return new PipelineVaadinAgentService();
+  }
+
+  @Bean
+  @ConditionalOnMissingBean
+  public PipelineVaadinTaskService pipelineVaadinTaskService() {
+    return new PipelineVaadinTaskService();
+  }
+
+  @Bean
   public VaadinSideNavItemSupplier pipelineSideNavView() {
     return (authenticationContext) -> {
       SideNavItem item = new SideNavItem("CI Pipeline");
-      item.setPrefixComponent(VaadinIcon.BOMB.create());
-      item.addItem(new SideNavItem("CI Agent", PipelineVaadinView.class, VaadinIcon.BOMB.create()));
-      item.addItem(new SideNavItem("CI 任务", PipelineVaadinView.class, VaadinIcon.TASKS.create()));
+      item.setPrefixComponent(VaadinIcon.AUTOMATION.create());
+      item.addItem(
+          new SideNavItem(
+              "CI Agent", PipelineVaadinAgentsView.class, VaadinIcon.AUTOMATION.create()));
+      item.addItem(
+          new SideNavItem("CI 任务", PipelineVaadinTasksView.class, VaadinIcon.TASKS.create()));
       return item;
     };
   }

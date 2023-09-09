@@ -13,15 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.pipeline.vaadin.views;
+package org.doodle.pipeline.vaadin;
 
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.router.PageTitle;
-import com.vaadin.flow.router.Route;
-import jakarta.annotation.security.RolesAllowed;
-import org.doodle.boot.vaadin.views.VaadinMainLayout;
-
-@RolesAllowed("PIPELINE_ADMIN")
-@PageTitle("Pipeline")
-@Route(value = "pipeline", layout = VaadinMainLayout.class)
-public class PipelineVaadinView extends VerticalLayout {}
+public class PipelineVaadinAgentService {}
