@@ -13,25 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.pipeline.client;
+package org.doodle.pipeline.server;
 
-import java.util.Map;
 import lombok.AccessLevel;
-import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.doodle.design.pipeline.*;
+import org.springframework.stereotype.Controller;
+import reactor.core.publisher.Mono;
 
-@Data
+@Controller
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@ConfigurationProperties(prefix = PipelineClientProperties.PREFIX)
-public class PipelineClientProperties {
-  public static final String PREFIX = "doodle.pipeline.client";
+@RequiredArgsConstructor
+public class PipelineServerAgentRSocketController
+    implements PipelineAgentCreateOps.RSocket, PipelineAgentPageOps.RSocket {
+  PipelineServerAgentService agentService;
 
-  Server server = new Server();
+  @Override
+  public Mono<PipelineAgentCreateReply> create(PipelineAgentCreateRequest request) {
+    return null;
+  }
 
-  @Data
-  @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-  public static class Server {
-    Map<String, String> tags = Map.of("server-type", "pipeline");
+  @Override
+  public Mono<PipelineAgentPageReply> page(PipelineAgentPageRequest request) {
+    return null;
   }
 }

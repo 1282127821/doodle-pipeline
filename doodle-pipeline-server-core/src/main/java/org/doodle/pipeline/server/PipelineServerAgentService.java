@@ -15,14 +15,4 @@
  */
 package org.doodle.pipeline.server;
 
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.experimental.FieldDefaults;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-
-@Data
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@ConfigurationProperties(prefix = PipelineServerProperties.PREFIX)
-public class PipelineServerProperties {
-  public static final String PREFIX = "doodle.pipeline.server";
-}
+public class PipelineServerAgentService {}

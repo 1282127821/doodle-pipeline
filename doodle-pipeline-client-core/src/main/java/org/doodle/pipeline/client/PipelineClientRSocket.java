@@ -15,23 +15,8 @@
  */
 package org.doodle.pipeline.client;
 
-import java.util.Map;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.experimental.FieldDefaults;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.doodle.design.pipeline.PipelineAgentCreateOps;
+import org.doodle.design.pipeline.PipelineAgentPageOps;
 
-@Data
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@ConfigurationProperties(prefix = PipelineClientProperties.PREFIX)
-public class PipelineClientProperties {
-  public static final String PREFIX = "doodle.pipeline.client";
-
-  Server server = new Server();
-
-  @Data
-  @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-  public static class Server {
-    Map<String, String> tags = Map.of("server-type", "pipeline");
-  }
-}
+public interface PipelineClientRSocket
+    extends PipelineAgentCreateOps.RSocket, PipelineAgentPageOps.RSocket {}

@@ -15,12 +15,42 @@
  */
 package org.doodle.pipeline.autoconfigure.server;
 
+import org.doodle.design.broker.rsocket.BrokerRSocketRequester;
+import org.doodle.pipeline.server.PipelineServerAgentRSocketController;
+import org.doodle.pipeline.server.PipelineServerAgentRepo;
+import org.doodle.pipeline.server.PipelineServerAgentService;
 import org.doodle.pipeline.server.PipelineServerProperties;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.data.mongodb.config.EnableMongoAuditing;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @AutoConfiguration
 @ConditionalOnClass(PipelineServerProperties.class)
 @EnableConfigurationProperties(PipelineServerProperties.class)
-public class PipelineServerAutoConfiguration {}
+@EnableMongoAuditing
+@EnableMongoRepositories(basePackageClasses = PipelineServerAgentRepo.class)
+public class PipelineServerAutoConfiguration {
+
+  @AutoConfiguration
+  @ConditionalOnClass(BrokerRSocketRequester.class)
+  @ConditionalOnBean(BrokerRSocketRequester.class)
+  public static class RSocketConfiguration {
+    @Bean
+    @ConditionalOnMissingBean
+    public PipelineServerAgentService pipelineServerAgentService() {
+      return new PipelineServerAgentService();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public PipelineServerAgentRSocketController pipelineServerAgentRSocketController(
+        PipelineServerAgentService agentService) {
+      return new PipelineServerAgentRSocketController(agentService);
+    }
+  }
+}

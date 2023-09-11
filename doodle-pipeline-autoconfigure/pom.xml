@@ -26,6 +26,15 @@
     </dependency>
     <dependency>
       <groupId>org.doodle</groupId>
+      <artifactId>doodle-broker-autoconfigure</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.doodle</groupId>
+      <artifactId>doodle-broker-client-core</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.doodle</groupId>
       <artifactId>doodle-pipeline-agent-core</artifactId>
       <optional>true</optional>
     </dependency>
@@ -42,6 +51,11 @@
     <dependency>
       <groupId>org.doodle</groupId>
       <artifactId>doodle-pipeline-vaadin-core</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.data</groupId>
+      <artifactId>spring-data-mongodb</artifactId>
       <optional>true</optional>
     </dependency>
     <dependency>

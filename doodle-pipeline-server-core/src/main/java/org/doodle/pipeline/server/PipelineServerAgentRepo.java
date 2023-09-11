@@ -15,14 +15,9 @@
  */
 package org.doodle.pipeline.server;
 
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.experimental.FieldDefaults;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
 
-@Data
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@ConfigurationProperties(prefix = PipelineServerProperties.PREFIX)
-public class PipelineServerProperties {
-  public static final String PREFIX = "doodle.pipeline.server";
-}
+@Repository
+public interface PipelineServerAgentRepo
+    extends MongoRepository<PipelineServerAgentEntity, String> {}
