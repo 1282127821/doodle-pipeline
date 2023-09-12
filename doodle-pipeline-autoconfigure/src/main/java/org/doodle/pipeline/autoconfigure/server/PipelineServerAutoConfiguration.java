@@ -16,14 +16,12 @@
 package org.doodle.pipeline.autoconfigure.server;
 
 import org.doodle.design.broker.rsocket.BrokerRSocketRequester;
-import org.doodle.pipeline.server.PipelineServerAgentRSocketController;
-import org.doodle.pipeline.server.PipelineServerAgentRepo;
-import org.doodle.pipeline.server.PipelineServerAgentService;
-import org.doodle.pipeline.server.PipelineServerProperties;
+import org.doodle.pipeline.server.*;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.config.EnableMongoAuditing;
@@ -36,15 +34,33 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @EnableMongoRepositories(basePackageClasses = PipelineServerAgentRepo.class)
 public class PipelineServerAutoConfiguration {
 
+  @Bean
+  @ConditionalOnMissingBean
+  public PipelineServerMapper pipelineServerMapper() {
+    return new PipelineServerMapper();
+  }
+
+  @Bean
+  @ConditionalOnMissingBean
+  public PipelineServerAgentService pipelineServerAgentService() {
+    return new PipelineServerAgentService();
+  }
+
+  @AutoConfiguration
+  @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
+  public static class ServletConfinguration {
+    @Bean
+    @ConditionalOnMissingBean
+    public PipelineServerAgentServletController pipelineServerAgentServletController(
+        PipelineServerAgentService agentService) {
+      return new PipelineServerAgentServletController(agentService);
+    }
+  }
+
   @AutoConfiguration
   @ConditionalOnClass(BrokerRSocketRequester.class)
   @ConditionalOnBean(BrokerRSocketRequester.class)
   public static class RSocketConfiguration {
-    @Bean
-    @ConditionalOnMissingBean
-    public PipelineServerAgentService pipelineServerAgentService() {
-      return new PipelineServerAgentService();
-    }
 
     @Bean
     @ConditionalOnMissingBean

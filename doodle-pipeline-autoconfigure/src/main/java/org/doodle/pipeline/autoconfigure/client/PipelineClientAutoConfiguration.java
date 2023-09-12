@@ -17,20 +17,30 @@ package org.doodle.pipeline.autoconfigure.client;
 
 import org.doodle.broker.autoconfigure.client.BrokerClientAutoConfiguration;
 import org.doodle.broker.client.BrokerClientRSocketRequester;
-import org.doodle.pipeline.client.BrokerPipelineRSocket;
-import org.doodle.pipeline.client.PipelineClientProperties;
-import org.doodle.pipeline.client.PipelineClientRSocket;
+import org.doodle.pipeline.client.*;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.client.RestTemplate;
 
 @AutoConfiguration(after = BrokerClientAutoConfiguration.class)
 @ConditionalOnClass(PipelineClientProperties.class)
 @EnableConfigurationProperties(PipelineClientProperties.class)
 public class PipelineClientAutoConfiguration {
+
+  @AutoConfiguration
+  @ConditionalOnClass(RestTemplate.class)
+  @ConditionalOnBean(RestTemplate.class)
+  public static class ServletConfiguration {
+    @Bean
+    @ConditionalOnMissingBean
+    public PipelineClientServlet pipelineClientServlet(RestTemplate template) {
+      return new PipelineClientServletImpl(template);
+    }
+  }
 
   @AutoConfiguration
   @ConditionalOnClass(BrokerClientRSocketRequester.class)

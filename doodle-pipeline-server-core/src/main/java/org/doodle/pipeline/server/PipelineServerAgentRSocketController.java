@@ -19,6 +19,8 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.doodle.design.pipeline.*;
+import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
+import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Controller;
 import reactor.core.publisher.Mono;
 
@@ -29,13 +31,27 @@ public class PipelineServerAgentRSocketController
     implements PipelineAgentCreateOps.RSocket, PipelineAgentPageOps.RSocket {
   PipelineServerAgentService agentService;
 
+  @MessageMapping(PipelineAgentCreateOps.RSocket.CREATE_MAPPING)
   @Override
   public Mono<PipelineAgentCreateReply> create(PipelineAgentCreateRequest request) {
-    return null;
+    return Mono.empty();
   }
 
+  @MessageExceptionHandler(Exception.class)
+  public Mono<PipelineAgentCreateReply> onCreateException(Exception ignored) {
+    return Mono.just(
+        PipelineAgentCreateReply.newBuilder().setError(PipelineErrorCode.FAILURE).build());
+  }
+
+  @MessageMapping(PipelineAgentPageOps.RSocket.PAGE_MAPPING)
   @Override
   public Mono<PipelineAgentPageReply> page(PipelineAgentPageRequest request) {
-    return null;
+    return Mono.empty();
+  }
+
+  @MessageExceptionHandler(Exception.class)
+  public Mono<PipelineAgentPageReply> onPageException(Exception ignored) {
+    return Mono.just(
+        PipelineAgentPageReply.newBuilder().setError(PipelineErrorCode.FAILURE).build());
   }
 }
