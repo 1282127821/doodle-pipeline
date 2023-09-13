@@ -31,7 +31,8 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @ConditionalOnClass(PipelineServerProperties.class)
 @EnableConfigurationProperties(PipelineServerProperties.class)
 @EnableMongoAuditing
-@EnableMongoRepositories(basePackageClasses = PipelineServerAgentRepo.class)
+@EnableMongoRepositories(
+    basePackageClasses = {PipelineServerAgentRepo.class, PipelineServerWorkflowRepo.class})
 public class PipelineServerAutoConfiguration {
   @Bean
   @ConditionalOnMissingBean
@@ -45,6 +46,13 @@ public class PipelineServerAutoConfiguration {
     return new PipelineServerAgentService(agentRepo);
   }
 
+  @Bean
+  @ConditionalOnMissingBean
+  public PipelineServerWorkflowService pipelineServerWorkflowService(
+      PipelineServerWorkflowRepo workflowRepo) {
+    return new PipelineServerWorkflowService(workflowRepo);
+  }
+
   @AutoConfiguration
   @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
   public static class ServletConfinguration {
@@ -53,6 +61,13 @@ public class PipelineServerAutoConfiguration {
     public PipelineServerAgentServletController pipelineServerAgentServletController(
         PipelineServerAgentService agentService) {
       return new PipelineServerAgentServletController(agentService);
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public PipelineServerWorkflowServletController pipelineServerWorkflowServletController(
+        PipelineServerWorkflowService workflowService) {
+      return new PipelineServerWorkflowServletController(workflowService);
     }
   }
 
@@ -65,6 +80,13 @@ public class PipelineServerAutoConfiguration {
     public PipelineServerAgentRSocketController pipelineServerAgentRSocketController(
         PipelineServerAgentService agentService) {
       return new PipelineServerAgentRSocketController(agentService);
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public PipelineServerWorkflowRSocketController pipelineServerWorkflowRSocketController(
+        PipelineServerWorkflowService workflowService) {
+      return new PipelineServerWorkflowRSocketController(workflowService);
     }
   }
 }

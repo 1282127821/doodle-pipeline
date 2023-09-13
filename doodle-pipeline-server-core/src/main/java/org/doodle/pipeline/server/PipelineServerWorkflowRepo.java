@@ -13,15 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.pipeline.client;
+package org.doodle.pipeline.server;
 
-import org.doodle.design.pipeline.PipelineAgentCreateOps;
-import org.doodle.design.pipeline.PipelineAgentPageOps;
-import org.doodle.design.pipeline.PipelineWorkflowPageOps;
-import org.doodle.design.pipeline.PipelineWorkflowQueryOps;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
 
-public interface PipelineClientRSocket
-    extends PipelineAgentCreateOps.RSocket,
-        PipelineAgentPageOps.RSocket,
-        PipelineWorkflowQueryOps.RSocket,
-        PipelineWorkflowPageOps.RSocket {}
+@Repository
+public interface PipelineServerWorkflowRepo
+    extends MongoRepository<PipelineServerWorkflowEntity, String> {}

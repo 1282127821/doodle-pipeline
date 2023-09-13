@@ -13,44 +13,44 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.pipeline.client;
+package org.doodle.pipeline.server;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.doodle.design.common.Result;
-import org.doodle.design.pipeline.model.payload.reply.PipelineAgentCreateReply;
-import org.doodle.design.pipeline.model.payload.reply.PipelineAgentPageReply;
+import org.doodle.design.pipeline.PipelineWorkflowPageOps;
+import org.doodle.design.pipeline.PipelineWorkflowQueryOps;
 import org.doodle.design.pipeline.model.payload.reply.PipelineWorkflowPageReply;
 import org.doodle.design.pipeline.model.payload.reply.PipelineWorkflowQueryReply;
-import org.doodle.design.pipeline.model.payload.request.PipelineAgentCreateRequest;
-import org.doodle.design.pipeline.model.payload.request.PipelineAgentPageRequest;
 import org.doodle.design.pipeline.model.payload.request.PipelineWorkflowPageRequest;
 import org.doodle.design.pipeline.model.payload.request.PipelineWorkflowQueryRequest;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
-public class PipelineClientServletImpl implements PipelineClientServlet {
-  RestTemplate restTemplate;
+public class PipelineServerWorkflowServletController
+    implements PipelineWorkflowQueryOps.Servlet, PipelineWorkflowPageOps.Servlet {
+  PipelineServerWorkflowService workflowService;
 
-  @Override
-  public Result<PipelineAgentCreateReply> create(PipelineAgentCreateRequest request) {
-    return Result.bad();
-  }
-
-  @Override
-  public Result<PipelineAgentPageReply> page(PipelineAgentPageRequest request) {
-    return Result.bad();
-  }
-
+  @PostMapping(PipelineWorkflowQueryOps.Servlet.QUERY_MAPPING)
   @Override
   public Result<PipelineWorkflowPageReply> page(PipelineWorkflowPageRequest request) {
     return Result.bad();
   }
 
+  @PostMapping(PipelineWorkflowPageOps.Servlet.PAGE_MAPPING)
   @Override
   public Result<PipelineWorkflowQueryReply> query(PipelineWorkflowQueryRequest request) {
     return Result.bad();
+  }
+
+  @ExceptionHandler(Exception.class)
+  public ResponseEntity<Result<Void>> onException(Exception ignored) {
+    return ResponseEntity.badRequest().body(Result.bad());
   }
 }

@@ -13,15 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.pipeline.client;
+package org.doodle.pipeline.vaadin.views;
 
-import org.doodle.design.pipeline.PipelineAgentCreateOps;
-import org.doodle.design.pipeline.PipelineAgentPageOps;
-import org.doodle.design.pipeline.PipelineWorkflowPageOps;
-import org.doodle.design.pipeline.PipelineWorkflowQueryOps;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.router.Route;
+import jakarta.annotation.security.RolesAllowed;
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
+import org.doodle.boot.vaadin.views.VaadinMainLayout;
 
-public interface PipelineClientRSocket
-    extends PipelineAgentCreateOps.RSocket,
-        PipelineAgentPageOps.RSocket,
-        PipelineWorkflowQueryOps.RSocket,
-        PipelineWorkflowPageOps.RSocket {}
+@RolesAllowed({"ROLE_ADMIN", "ROLE_PIPELINE_ADMIN"})
+@Route(value = "pipeline-workflows", layout = VaadinMainLayout.class)
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class PipelineVaadinWorkflowsView extends VerticalLayout {}

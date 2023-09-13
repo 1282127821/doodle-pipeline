@@ -22,8 +22,10 @@ import org.doodle.boot.vaadin.views.VaadinSideNavItemSupplier;
 import org.doodle.pipeline.vaadin.PipelineVaadinAgentService;
 import org.doodle.pipeline.vaadin.PipelineVaadinProperties;
 import org.doodle.pipeline.vaadin.PipelineVaadinTaskService;
+import org.doodle.pipeline.vaadin.PipelineVaadinWorkflowService;
 import org.doodle.pipeline.vaadin.views.PipelineVaadinAgentsView;
 import org.doodle.pipeline.vaadin.views.PipelineVaadinTasksView;
+import org.doodle.pipeline.vaadin.views.PipelineVaadinWorkflowsView;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -49,15 +51,21 @@ public class PipelineVaadinAutoConfiguration {
   }
 
   @Bean
+  @ConditionalOnMissingBean
+  public PipelineVaadinWorkflowService pipelineVaadinWorkflowService() {
+    return new PipelineVaadinWorkflowService();
+  }
+
+  @Bean
   public VaadinSideNavItemSupplier pipelineSideNavView() {
     return (authenticationContext) -> {
       SideNavItem item = new SideNavItem("CI Pipeline");
       item.setPrefixComponent(VaadinIcon.AUTOMATION.create());
       item.addItem(
-          new SideNavItem(
-              "CI Agent", PipelineVaadinAgentsView.class, VaadinIcon.AUTOMATION.create()));
+          new SideNavItem("Agent", PipelineVaadinAgentsView.class, VaadinIcon.TASKS.create()));
       item.addItem(
-          new SideNavItem("CI 任务", PipelineVaadinTasksView.class, VaadinIcon.TASKS.create()));
+          new SideNavItem("工作流", PipelineVaadinWorkflowsView.class, VaadinIcon.TASKS.create()));
+      item.addItem(new SideNavItem("任务", PipelineVaadinTasksView.class, VaadinIcon.TASKS.create()));
       return item;
     };
   }

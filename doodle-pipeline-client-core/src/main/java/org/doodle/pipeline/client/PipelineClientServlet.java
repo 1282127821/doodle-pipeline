@@ -17,6 +17,11 @@ package org.doodle.pipeline.client;
 
 import org.doodle.design.pipeline.PipelineAgentCreateOps;
 import org.doodle.design.pipeline.PipelineAgentPageOps;
+import org.doodle.design.pipeline.PipelineWorkflowPageOps;
+import org.doodle.design.pipeline.PipelineWorkflowQueryOps;
 
 public interface PipelineClientServlet
-    extends PipelineAgentCreateOps.Servlet, PipelineAgentPageOps.Servlet {}
+    extends PipelineAgentCreateOps.Servlet,
+        PipelineAgentPageOps.Servlet,
+        PipelineWorkflowQueryOps.Servlet,
+        PipelineWorkflowPageOps.Servlet {}

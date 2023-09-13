@@ -50,6 +50,20 @@ public class BrokerPipelineRSocket implements PipelineClientRSocket {
         .retrieveMono(PipelineAgentPageReply.class);
   }
 
+  @Override
+  public Mono<PipelineWorkflowQueryReply> query(PipelineWorkflowQueryRequest request) {
+    return route(PipelineWorkflowQueryOps.RSocket.QUERY_MAPPING)
+        .data(request)
+        .retrieveMono(PipelineWorkflowQueryReply.class);
+  }
+
+  @Override
+  public Mono<PipelineWorkflowPageReply> page(PipelineWorkflowPageRequest request) {
+    return route(PipelineWorkflowPageOps.RSocket.PAGE_MAPPING)
+        .data(request)
+        .retrieveMono(PipelineWorkflowPageReply.class);
+  }
+
   protected RSocketRequester.RequestSpec route(String route) {
     return requester.route(route).metadata(frame, BrokerFrameMimeTypes.BROKER_FRAME_MIME_TYPE);
   }

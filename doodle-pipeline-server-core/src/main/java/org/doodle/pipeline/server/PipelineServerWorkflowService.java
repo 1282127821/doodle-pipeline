@@ -13,15 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.pipeline.client;
+package org.doodle.pipeline.server;
 
-import org.doodle.design.pipeline.PipelineAgentCreateOps;
-import org.doodle.design.pipeline.PipelineAgentPageOps;
-import org.doodle.design.pipeline.PipelineWorkflowPageOps;
-import org.doodle.design.pipeline.PipelineWorkflowQueryOps;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
-public interface PipelineClientRSocket
-    extends PipelineAgentCreateOps.RSocket,
-        PipelineAgentPageOps.RSocket,
-        PipelineWorkflowQueryOps.RSocket,
-        PipelineWorkflowPageOps.RSocket {}
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@RequiredArgsConstructor
+public class PipelineServerWorkflowService {
+  PipelineServerWorkflowRepo workflowRepo;
+}

@@ -13,15 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.pipeline.client;
+package org.doodle.pipeline.vaadin;
 
-import org.doodle.design.pipeline.PipelineAgentCreateOps;
-import org.doodle.design.pipeline.PipelineAgentPageOps;
-import org.doodle.design.pipeline.PipelineWorkflowPageOps;
-import org.doodle.design.pipeline.PipelineWorkflowQueryOps;
-
-public interface PipelineClientRSocket
-    extends PipelineAgentCreateOps.RSocket,
-        PipelineAgentPageOps.RSocket,
-        PipelineWorkflowQueryOps.RSocket,
-        PipelineWorkflowPageOps.RSocket {}
+public class PipelineVaadinWorkflowService {}
