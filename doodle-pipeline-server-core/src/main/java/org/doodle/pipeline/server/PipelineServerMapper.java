@@ -15,4 +15,6 @@
  */
 package org.doodle.pipeline.server;
 
-public class PipelineServerMapper {}
+import org.doodle.design.pipeline.PipelineMapper;
+
+public class PipelineServerMapper extends PipelineMapper {}

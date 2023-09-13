@@ -30,6 +30,11 @@ import org.springframework.web.client.RestTemplate;
 @ConditionalOnClass(PipelineClientProperties.class)
 @EnableConfigurationProperties(PipelineClientProperties.class)
 public class PipelineClientAutoConfiguration {
+  @Bean
+  @ConditionalOnMissingBean
+  public PipelineClientMapper pipelineClientMapper() {
+    return new PipelineClientMapper();
+  }
 
   @AutoConfiguration
   @ConditionalOnClass(RestTemplate.class)

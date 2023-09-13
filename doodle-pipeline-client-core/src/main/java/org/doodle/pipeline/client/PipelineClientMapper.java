@@ -13,14 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.pipeline.server;
+package org.doodle.pipeline.client;
 
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
+import org.doodle.design.pipeline.PipelineMapper;
 
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@RequiredArgsConstructor
-public class PipelineServerAgentService {
-  PipelineServerAgentRepo agentRepo;
-}
+public class PipelineClientMapper extends PipelineMapper {}

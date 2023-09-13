@@ -23,7 +23,7 @@ import lombok.experimental.FieldDefaults;
 import org.doodle.boot.vaadin.views.VaadinMainLayout;
 import org.doodle.pipeline.vaadin.PipelineVaadinAgentService;
 
-@RolesAllowed("PIPELINE_ADMIN")
+@RolesAllowed({"ROLE_ADMIN", "ROLE_PIPELINE_ADMIN"})
 @Route(value = "pipeline-agents", layout = VaadinMainLayout.class)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PipelineVaadinAgentsView extends VerticalLayout {

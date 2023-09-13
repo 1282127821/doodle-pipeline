@@ -33,7 +33,6 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @EnableMongoAuditing
 @EnableMongoRepositories(basePackageClasses = PipelineServerAgentRepo.class)
 public class PipelineServerAutoConfiguration {
-
   @Bean
   @ConditionalOnMissingBean
   public PipelineServerMapper pipelineServerMapper() {
@@ -42,8 +41,8 @@ public class PipelineServerAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public PipelineServerAgentService pipelineServerAgentService() {
-    return new PipelineServerAgentService();
+  public PipelineServerAgentService pipelineServerAgentService(PipelineServerAgentRepo agentRepo) {
+    return new PipelineServerAgentService(agentRepo);
   }
 
   @AutoConfiguration
@@ -61,7 +60,6 @@ public class PipelineServerAutoConfiguration {
   @ConditionalOnClass(BrokerRSocketRequester.class)
   @ConditionalOnBean(BrokerRSocketRequester.class)
   public static class RSocketConfiguration {
-
     @Bean
     @ConditionalOnMissingBean
     public PipelineServerAgentRSocketController pipelineServerAgentRSocketController(

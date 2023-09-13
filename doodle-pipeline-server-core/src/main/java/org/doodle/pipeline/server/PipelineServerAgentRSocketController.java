@@ -37,8 +37,10 @@ public class PipelineServerAgentRSocketController
     return Mono.empty();
   }
 
-  @MessageExceptionHandler(Exception.class)
-  public Mono<PipelineAgentCreateReply> onCreateException(Exception ignored) {
+  static class CreateException extends RuntimeException {}
+
+  @MessageExceptionHandler(CreateException.class)
+  Mono<PipelineAgentCreateReply> onCreateException(CreateException ignored) {
     return Mono.just(
         PipelineAgentCreateReply.newBuilder().setError(PipelineErrorCode.FAILURE).build());
   }
@@ -49,8 +51,10 @@ public class PipelineServerAgentRSocketController
     return Mono.empty();
   }
 
-  @MessageExceptionHandler(Exception.class)
-  public Mono<PipelineAgentPageReply> onPageException(Exception ignored) {
+  static class PageException extends RuntimeException {}
+
+  @MessageExceptionHandler(PageException.class)
+  Mono<PipelineAgentPageReply> onPageException(PageException ignored) {
     return Mono.just(
         PipelineAgentPageReply.newBuilder().setError(PipelineErrorCode.FAILURE).build());
   }

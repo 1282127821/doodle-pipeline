@@ -32,7 +32,6 @@ import org.springframework.context.annotation.Bean;
 @ConditionalOnClass(PipelineAgentProperties.class)
 @EnableConfigurationProperties(PipelineAgentProperties.class)
 public class PipelineAgentAutoConfiguration {
-
   @AutoConfiguration
   @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
   public static class ServletConfiguration {

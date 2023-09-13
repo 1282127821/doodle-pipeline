@@ -23,7 +23,7 @@ import lombok.experimental.FieldDefaults;
 import org.doodle.boot.vaadin.views.VaadinMainLayout;
 import org.doodle.pipeline.vaadin.PipelineVaadinTaskService;
 
-@RolesAllowed("PIPELINE_ADMIN")
+@RolesAllowed({"ROLE_ADMIN", "ROLE_PIPELINE_ADMIN"})
 @Route(value = "pipeline-tasks", layout = VaadinMainLayout.class)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PipelineVaadinTasksView extends VerticalLayout {
