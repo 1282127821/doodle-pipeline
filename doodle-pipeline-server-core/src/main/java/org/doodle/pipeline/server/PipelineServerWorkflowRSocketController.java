@@ -19,6 +19,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.doodle.design.pipeline.*;
+import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Controller;
 import reactor.core.publisher.Mono;
@@ -30,15 +31,27 @@ public class PipelineServerWorkflowRSocketController
     implements PipelineWorkflowQueryOps.RSocket, PipelineWorkflowPageOps.RSocket {
   PipelineServerWorkflowService workflowService;
 
+  @MessageMapping(PipelineWorkflowPageOps.RSocket.PAGE_MAPPING)
+  @Override
+  public Mono<PipelineWorkflowQueryReply> query(PipelineWorkflowQueryRequest request) {
+    return Mono.empty();
+  }
+
+  @MessageExceptionHandler(PipelineServerExceptions.Query.class)
+  Mono<PipelineWorkflowQueryReply> onQueryException(PipelineServerExceptions.Query ignored) {
+    return Mono.just(
+        PipelineWorkflowQueryReply.newBuilder().setError(PipelineErrorCode.FAILURE).build());
+  }
+
   @MessageMapping(PipelineWorkflowQueryOps.RSocket.QUERY_MAPPING)
   @Override
   public Mono<PipelineWorkflowPageReply> page(PipelineWorkflowPageRequest request) {
     return Mono.empty();
   }
 
-  @MessageMapping(PipelineWorkflowPageOps.RSocket.PAGE_MAPPING)
-  @Override
-  public Mono<PipelineWorkflowQueryReply> query(PipelineWorkflowQueryRequest request) {
-    return Mono.empty();
+  @MessageExceptionHandler(PipelineServerExceptions.Page.class)
+  Mono<PipelineWorkflowPageReply> onPageException(PipelineServerExceptions.Page ignored) {
+    return Mono.just(
+        PipelineWorkflowPageReply.newBuilder().setError(PipelineErrorCode.FAILURE).build());
   }
 }

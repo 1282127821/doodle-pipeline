@@ -19,10 +19,15 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.RolesAllowed;
 import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.doodle.boot.vaadin.views.VaadinMainLayout;
+import org.doodle.pipeline.vaadin.PipelineVaadinWorkflowService;
 
 @RolesAllowed({"ROLE_ADMIN", "ROLE_PIPELINE_ADMIN"})
 @Route(value = "pipeline-workflows", layout = VaadinMainLayout.class)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class PipelineVaadinWorkflowsView extends VerticalLayout {}
+@RequiredArgsConstructor
+public class PipelineVaadinWorkflowsView extends VerticalLayout {
+  final PipelineVaadinWorkflowService workflowService;
+}

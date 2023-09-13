@@ -64,7 +64,7 @@ public class PipelineVaadinAutoConfiguration {
       item.addItem(
           new SideNavItem("Agent", PipelineVaadinAgentsView.class, VaadinIcon.TASKS.create()));
       item.addItem(
-          new SideNavItem("工作流", PipelineVaadinWorkflowsView.class, VaadinIcon.TASKS.create()));
+          new SideNavItem("编排", PipelineVaadinWorkflowsView.class, VaadinIcon.TASKS.create()));
       item.addItem(new SideNavItem("任务", PipelineVaadinTasksView.class, VaadinIcon.TASKS.create()));
       return item;
     };
